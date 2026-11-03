@@ -7,7 +7,7 @@
 // ============================================================
 
 /** Colour palette used for the bar charts (one bar per algorithm). */
-const CHART_COLORS = ['#6c63ff', '#00d4ff', '#ff6b9d', '#22d3a0', '#fbbf24', '#a78bfa'];
+const CHART_COLORS = ['#b9a3e6', '#80c4d6', '#e3a3b7', '#a8d998', '#e8c080', '#9caee5'];
 
 /** Shared Chart.js options for dark-themed bar charts. */
 const BAR_CHART_OPTIONS = {
@@ -15,8 +15,8 @@ const BAR_CHART_OPTIONS = {
   maintainAspectRatio: false,
   plugins: { legend: { display: false } },
   scales: {
-    y: { grid: { color: 'rgba(255,255,255,.06)' }, ticks: { color: '#7a8ba8', font: { size: 11 } } },
-    x: { grid: { display: false },                 ticks: { color: '#7a8ba8', font: { size: 10 } } },
+    y: { grid: { color: 'rgba(255,255,255,.06)' }, ticks: { color: '#a1a3a5', font: { size: 11 } } },
+    x: { grid: { display: false },                 ticks: { color: '#a1a3a5', font: { size: 10 } } },
   },
 };
 

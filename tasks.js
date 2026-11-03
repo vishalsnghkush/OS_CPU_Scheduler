@@ -91,8 +91,23 @@ function renderTaskTable() {
   document.getElementById('cpu-badge').textContent  =
     coreCount + ' CORE' + (parseInt(coreCount) > 1 ? 'S' : '');
 
+  document.getElementById('summary-tasks').innerHTML = tasks.length + '<span>tasks</span>';
+  const totalBurst = tasks.reduce((total, task) => total + task.burst, 0);
+  document.getElementById('summary-burst').innerHTML = totalBurst + '<span>units</span>';
+  document.getElementById('preview-total').textContent = totalBurst + ' units';
+
+  // This is a workload breakdown, not an algorithm execution timeline.
+  const preview = document.getElementById('workload-preview');
+  preview.replaceChildren(...tasks.map(task => {
+    const block = document.createElement('span');
+    block.style.flex = task.burst;
+    block.style.background = task.color;
+    block.textContent = task.name;
+    return block;
+  }));
+
   if (!tasks.length) {
-    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No tasks yet.</div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><strong>Your queue is a clean slate.</strong><br>Add a process or choose a preset to get started.</div></td></tr>';
     return;
   }
 
@@ -104,7 +119,7 @@ function renderTaskTable() {
       <td>${t.burst}</td>
       <td>${t.priority}</td>
       <td>${t.memory}MB</td>
-      <td><button class="remove-btn" onclick="removeTask(${i})">✕</button></td>
+      <td><button type="button" class="remove-btn" aria-label="Remove process ${i + 1}" title="Remove process" onclick="removeTask(${i})">✕</button></td>
     </tr>
   `).join('');
 }

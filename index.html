@@ -3,329 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CPU Scheduler Pro</title>
-
-  <!-- All styles in one dedicated stylesheet -->
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="Build a workload, explore CPU scheduling algorithms, and watch every process fall into place.">
+  <title>CPU Scheduler Pro · Scheduling workspace</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to workspace</a>
 <div class="app" id="app">
-
-  <!-- ════════════════════════════════════════════
-       HEADER
-       ════════════════════════════════════════════ -->
-  <div class="header">
-    <div class="logo">
-      <div class="logo-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="2"  y="4"  width="7" height="7" rx="1.5" fill="white" opacity=".9"/>
-          <rect x="11" y="4"  width="7" height="7" rx="1.5" fill="white" opacity=".6"/>
-          <rect x="2"  y="13" width="7" height="5" rx="1.5" fill="white" opacity=".6"/>
-          <rect x="11" y="13" width="7" height="5" rx="1.5" fill="white" opacity=".9"/>
-        </svg>
+  <aside class="sidebar" aria-label="Workspace navigation">
+    <a class="logo" href="index.html" aria-label="CPU Scheduler Pro home">
+      <div class="logo-icon" aria-hidden="true">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="14" height="14" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v3m6-3v3M9 19v3m6-3v3M2 9h3m-3 6h3m14-6h3m-3 6h3"/></svg>
       </div>
-      <div>
-        <div class="logo-text">CPU Scheduler Pro</div>
-        <div class="logo-sub">v2.0 · Advanced Simulation Engine</div>
-      </div>
+      <div><div class="logo-text">CPU Scheduler<span class="pro-label">PRO</span></div><div class="logo-sub">A little order. A lot of possibilities.</div></div>
+    </a>
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="tabs" role="tablist" aria-label="Scheduling tools" aria-orientation="vertical">
+      <button type="button" class="tab active" data-tab="builder" id="tab-builder" role="tab" aria-controls="panel-builder" aria-selected="true" onclick="switchTab('builder')"><span class="tab-icon" aria-hidden="true">⊞</span><span>Task builder</span><span class="nav-arrow" aria-hidden="true">↗</span></button>
+      <button type="button" class="tab" data-tab="simulation" id="tab-simulation" role="tab" aria-controls="panel-simulation" aria-selected="false" tabindex="-1" onclick="switchTab('simulation')"><span class="tab-icon" aria-hidden="true">▷</span><span>Simulation</span></button>
+      <button type="button" class="tab" data-tab="comparison" id="tab-comparison" role="tab" aria-controls="panel-comparison" aria-selected="false" tabindex="-1" onclick="switchTab('comparison')"><span class="tab-icon" aria-hidden="true">▥</span><span>Comparison</span></button>
+      <button type="button" class="tab" data-tab="multicore" id="tab-multicore" role="tab" aria-controls="panel-multicore" aria-selected="false" tabindex="-1" onclick="switchTab('multicore')"><span class="tab-icon" aria-hidden="true">◇</span><span>Multi-core</span></button>
+      <button type="button" class="tab" data-tab="ai" id="tab-ai" role="tab" aria-controls="panel-ai" aria-selected="false" tabindex="-1" onclick="switchTab('ai')"><span class="tab-icon" aria-hidden="true">✧</span><span>AI advisor</span><span class="nav-new">LAB</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="sidebar-tip"><span class="tip-icon" aria-hidden="true">✳</span><strong>Different rules. Different results.</strong><p>Try the same workload across algorithms to find what works best.</p><button type="button" onclick="switchTab('comparison');runComparison()">Explore comparison <span aria-hidden="true">↗</span></button></div>
+      <div class="engine-status"><span class="status-dot"></span>Simulation engine ready <span class="version">v2.0</span></div>
     </div>
-    <div class="header-right">
-      <span class="badge badge-green"  id="status-badge">● IDLE</span>
-      <span class="badge badge-blue"   id="cpu-badge">0 CORES</span>
-      <span class="badge badge-amber"  id="algo-badge">NO ALGO</span>
-    </div>
-  </div>
+  </aside>
 
-  <!-- ════════════════════════════════════════════
-       TAB BAR
-       ════════════════════════════════════════════ -->
-  <div class="tabs">
-    <div class="tab active"  onclick="switchTab('builder')"   ><span class="tab-icon">⚙</span>Task Builder</div>
-    <div class="tab"         onclick="switchTab('simulation')" ><span class="tab-icon">▶</span>Simulation</div>
-    <div class="tab"         onclick="switchTab('comparison')" ><span class="tab-icon">⊞</span>Comparison</div>
-    <div class="tab"         onclick="switchTab('multicore')"  ><span class="tab-icon">◈</span>Multi-Core</div>
-    <div class="tab"         onclick="switchTab('ai')"         ><span class="tab-icon">✦</span>AI Advisor</div>
-  </div>
+  <div class="workspace">
+    <header class="header">
+      <div class="breadcrumb">Workspace <span aria-hidden="true">/</span> <strong>CPU scheduling</strong></div>
+      <div class="header-right"><span class="local-indicator"><span class="status-dot"></span>Runs locally</span><a class="github-link" href="https://github.com/Keshavkhandelwal151/cpu-scheduler-" target="_blank" rel="noopener noreferrer" aria-label="View source on GitHub (opens in a new tab)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m8 5-7 7 7 7m8-14 7 7-7 7M14 3l-4 18"/></svg> Source <span aria-hidden="true">↗</span></a></div>
+    </header>
 
-  <!-- ════════════════════════════════════════════
-       PANEL 1 — TASK BUILDER
-       ════════════════════════════════════════════ -->
-  <div class="panel active" id="panel-builder">
-    <div class="two-col">
+    <main id="main-content" tabindex="-1">
+      <section class="page-heading" aria-label="Workspace overview">
+        <div><div class="eyebrow"><span></span>THE SCHEDULING PLAYGROUND</div><h1 id="page-title">Task builder</h1><p id="page-description">Great simulations start with a little preparation. Build your workload below.</p></div>
+        <span class="badge badge-green" id="status-badge" role="status">● IDLE</span>
+      </section>
 
-      <!-- Left column: Add Task form + Algorithm Settings -->
-      <div>
-        <!-- Add Task -->
-        <div class="card">
-          <div class="card-title">Add Task</div>
-          <div class="form-row" style="grid-template-columns:1fr 1fr">
-            <div><label>Task Name</label>   <input id="in-name"    placeholder="T1" maxlength="4"></div>
-            <div><label>Arrival Time</label><input id="in-arrival" type="number" min="0" value="0"></div>
-          </div>
-          <div class="form-row" style="grid-template-columns:1fr 1fr 1fr">
-            <div><label>Burst Time</label>  <input id="in-burst"    type="number" min="1" value="5"></div>
-            <div><label>Priority</label>    <input id="in-priority" type="number" min="1" value="1"></div>
-            <div><label>Memory (MB)</label> <input id="in-memory"   type="number" min="1" value="256"></div>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-primary" onclick="addTask()">+ Add Task</button>
-            <button class="btn btn-ghost"   onclick="loadPreset('mixed')">Load Mixed</button>
-            <button class="btn btn-ghost"   onclick="loadPreset('priority')">Load Priority</button>
-            <button class="btn btn-ghost"   onclick="loadPreset('burst')">Load Burst</button>
-            <button class="btn btn-danger btn-sm" onclick="clearTasks()">Clear All</button>
-          </div>
-        </div>
+      <section class="overview-grid" aria-label="Current workload" aria-live="polite">
+        <div class="overview-card"><div class="overview-label">Total processes <span aria-hidden="true">⊞</span></div><div class="overview-value" id="summary-tasks">0<span>tasks</span></div><div class="overview-detail">In your ready queue</div></div>
+        <div class="overview-card"><div class="overview-label">Total burst time <span aria-hidden="true">◷</span></div><div class="overview-value" id="summary-burst">0<span>units</span></div><div class="overview-detail">Combined CPU workload</div></div>
+        <div class="overview-card"><div class="overview-label">CPU configuration <span aria-hidden="true">◇</span></div><div class="overview-value" id="summary-cores">1<span>core</span></div><div class="overview-detail"><span class="badge badge-blue" id="cpu-badge">1 CORE</span><span>Available to schedule</span></div></div>
+        <div class="overview-card overview-algorithm"><div class="overview-label">Selected algorithm <span aria-hidden="true">⌘</span></div><div class="overview-value" id="summary-algo">FCFS</div><div class="overview-detail"><span class="status-dot"></span><span class="badge badge-amber" id="algo-badge">FCFS</span><span>Ready when you are</span></div></div>
+      </section>
 
-        <!-- Algorithm Settings -->
-        <div class="card" style="margin-top:14px">
-          <div class="card-title">Algorithm Settings</div>
-          <!-- Chip grid rendered by ui.js → renderAlgoGrid() -->
-          <div class="algo-grid" id="algo-grid"></div>
-
-          <!-- Quantum input — shown only when Round Robin is selected -->
-          <div class="quantum-row" id="quantum-row" style="display:none">
-            <label style="margin:0;white-space:nowrap">Time Quantum:</label>
-            <input id="quantum-input" type="number" min="1" value="2" style="width:70px">
-            <span style="font-size:12px;color:var(--dim)">ms</span>
+      <div class="panel active" id="panel-builder" role="tabpanel" aria-labelledby="tab-builder">
+        <div class="builder-grid">
+          <div class="builder-settings">
+            <section class="card">
+              <div class="card-heading"><div><h2 class="card-title"><span class="section-icon" aria-hidden="true">＋</span>Add a process</h2><p class="card-description">Define the work. We’ll handle the scheduling.</p></div><span class="step-number">01</span></div>
+              <form onsubmit="event.preventDefault();addTask()">
+                <div class="form-row form-two"><div><label for="in-name">Process name</label><input id="in-name" placeholder="e.g. T7" maxlength="4" autocomplete="off"></div><div><label for="in-arrival">Arrival time <span class="field-unit">units</span></label><input id="in-arrival" type="number" min="0" value="0"></div></div>
+                <div class="form-row form-three"><div><label for="in-burst">Burst time</label><input id="in-burst" type="number" min="1" value="5"></div><div><label for="in-priority">Priority</label><input id="in-priority" type="number" min="1" value="1"></div><div><label for="in-memory">Memory <span class="field-unit">MB</span></label><input id="in-memory" type="number" min="1" value="256"></div></div>
+                <button type="submit" class="btn btn-primary add-task-btn"><span aria-hidden="true">＋</span> Add process <span class="button-shortcut" aria-hidden="true">↵</span></button>
+              </form>
+              <div class="preset-area"><div class="preset-label">Or start with a preset</div><div class="preset-buttons"><button type="button" class="btn btn-ghost btn-sm" onclick="loadPreset('mixed')"><span class="preset-dot mixed-dot"></span>Mixed workload</button><button type="button" class="btn btn-ghost btn-sm" onclick="loadPreset('priority')"><span class="preset-dot priority-dot"></span>Priority</button><button type="button" class="btn btn-ghost btn-sm" onclick="loadPreset('burst')"><span class="preset-dot burst-dot"></span>Burst</button></div></div>
+            </section>
+            <section class="card algorithm-card">
+              <div class="card-heading"><div><h2 class="card-title"><span class="section-icon" aria-hidden="true">⌘</span>Scheduling strategy</h2><p class="card-description">Choose how your CPU picks its next task.</p></div><span class="step-number">02</span></div>
+              <div class="algo-grid" id="algo-grid" role="group" aria-label="Scheduling algorithm"></div>
+              <div class="config-row"><div class="quantum-row" id="cores-row"><label for="cores-input">CPU cores <span class="config-hint">1–4 available</span></label><input id="cores-input" type="number" min="1" max="4" value="1"></div><div class="quantum-row" id="quantum-row" style="display:none"><label for="quantum-input">Time quantum <span class="config-hint">time units</span></label><input id="quantum-input" type="number" min="1" value="2"></div></div>
+              <div class="inline-note"><span aria-hidden="true">ⓘ</span> Lower priority numbers run first. <span class="preemptive-key">ϟ Preemptive</span></div>
+            </section>
           </div>
 
-          <!-- CPU core count -->
-          <div class="quantum-row" id="cores-row" style="margin-top:8px">
-            <label style="margin:0;white-space:nowrap">CPU Cores:</label>
-            <input id="cores-input" type="number" min="1" max="4" value="1" style="width:70px">
-            <span style="font-size:12px;color:var(--dim)">1–4</span>
-          </div>
+          <section class="card queue-card">
+            <div class="card-heading"><div><h2 class="card-title"><span class="section-icon" aria-hidden="true">≡</span>Process queue <span class="tag" id="task-count">0 tasks</span></h2><p class="card-description">Your workload, lined up and ready to go.</p></div><button type="button" class="btn btn-danger btn-sm" onclick="clearTasks()">Clear all</button></div>
+            <div class="table-scroll"><table class="task-table"><caption class="sr-only">Processes in the scheduling workload</caption><thead><tr><th scope="col"><span class="sr-only">Color</span></th><th scope="col">Process</th><th scope="col">Arrival</th><th scope="col">Burst</th><th scope="col">Priority</th><th scope="col">Memory</th><th scope="col"><span class="sr-only">Remove</span></th></tr></thead><tbody id="task-tbody"><tr><td colspan="7"><div class="empty-state">Your queue is a clean slate. Add a process or try a preset.</div></td></tr></tbody></table></div>
+            <div class="queue-footer"><span><span class="status-dot"></span>All processes stay in your browser</span><span>Time is measured in units</span></div>
+            <div class="queue-visual" aria-hidden="true"><div class="visual-label">A LITTLE PREVIEW OF WHAT’S NEXT</div><div class="mini-timeline" id="workload-preview"></div><div class="visual-axis"><span>0</span><span>CPU workload →</span><span id="preview-total">0 units</span></div></div>
+            <div class="queue-tip"><span class="tip-icon" aria-hidden="true">✧</span><div><strong>One workload, six perspectives.</strong><p>Compare algorithms to discover the trade-offs between waiting time, turnaround, and throughput.</p></div></div>
+          </section>
         </div>
+        <div class="run-bar"><div class="run-bar-copy"><span class="run-icon" aria-hidden="true">▷</span><div><strong>Let’s put your CPU to work.</strong><p>Watch your scheduling strategy come to life.</p></div></div><div class="run-actions"><button type="button" class="btn btn-ghost" onclick="switchTab('comparison');runComparison()">Compare algorithms <span aria-hidden="true">↗</span></button><button type="button" class="btn btn-primary" onclick="switchTab('simulation');runSimulation()"><span aria-hidden="true">▶</span> Run simulation</button></div></div>
       </div>
 
-      <!-- Right column: Task queue table -->
-      <div>
-        <div class="card" style="height:100%">
-          <div class="card-title">
-            Task Queue <span class="tag" id="task-count">0 tasks</span>
-          </div>
-          <table class="task-table">
-            <thead>
-              <tr>
-                <th></th><th>Name</th><th>Arrival</th><th>Burst</th><th>Priority</th><th>Memory</th><th></th>
-              </tr>
-            </thead>
-            <tbody id="task-tbody">
-              <tr><td colspan="7"><div class="empty-state">No tasks yet. Add tasks above or load a preset.</div></td></tr>
-            </tbody>
-          </table>
+      <div class="panel" id="panel-simulation" role="tabpanel" aria-labelledby="tab-simulation">
+        <div class="sim-controls card">
+          <button class="btn btn-green" id="btn-start" onclick="simStart()">▶ Start</button><button class="btn btn-amber" id="btn-pause" onclick="simPause()" disabled>⏸ Pause</button><button class="btn btn-ghost" id="btn-resume" onclick="simResume()" disabled>▷ Resume</button><button class="btn btn-danger" id="btn-reset" onclick="simReset()">↺ Reset</button>
+          <div class="speed-control"><label for="sim-speed">Speed</label><input type="range" id="sim-speed" min="1" max="10" value="5"><span id="speed-label">5x</span></div>
+          <div class="sim-info"><div class="sim-stat"><div class="sim-stat-val" id="sim-time">0</div><div class="sim-stat-lbl">Time unit</div></div><div class="sim-stat"><div class="sim-stat-val" id="sim-completed">0</div><div class="sim-stat-lbl">Completed</div></div><div class="sim-stat"><div class="sim-stat-val metric-green" id="sim-util">0%</div><div class="sim-stat-lbl">CPU utilization</div></div></div>
         </div>
+        <div class="progress-bar"><div class="progress-fill" id="sim-progress" style="width:0%"></div></div>
+        <section class="card section-spaced"><h2 class="card-title">Process queue state</h2><div id="queue-display" class="queue-display"><div class="empty-state">Start a simulation to follow your processes in real time.</div></div></section>
+        <section class="card section-spaced"><h2 class="card-title">Execution timeline <span class="tag" id="gantt-algo-label">—</span></h2><div class="gantt-container" id="gantt-container"><div class="gantt-inner"><div class="empty-state">Your next run starts here. Press Start to build the timeline.</div></div></div></section>
+        <div class="metrics-grid" id="metrics-grid"></div>
       </div>
-    </div>
 
-    <!-- Quick-action buttons -->
-    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-primary"
-              onclick="switchTab('simulation');runSimulation()"
-              style="font-size:14px;padding:10px 24px">
-        ▶ Run Simulation
-      </button>
-      <button class="btn btn-ghost"
-              onclick="switchTab('comparison');runComparison()">
-        ⊞ Compare All Algorithms
-      </button>
-    </div>
+      <div class="panel" id="panel-comparison" role="tabpanel" aria-labelledby="tab-comparison">
+        <section class="card section-spaced"><div class="card-heading"><div><h2 class="card-title">Six algorithms. One workload.</h2><p class="card-description">Compare the numbers. The best results in each column are highlighted.</p></div><button class="btn btn-primary" onclick="runComparison()">↻ Run comparison</button></div><div class="table-scroll"><table class="compare-table" id="compare-table"><caption class="sr-only">Scheduling algorithm performance comparison</caption><thead><tr><th scope="col">Algorithm</th><th scope="col">Avg wait</th><th scope="col">Avg turnaround</th><th scope="col">Throughput</th><th scope="col">CPU utilization</th><th scope="col">Context switches</th></tr></thead><tbody id="compare-tbody"><tr><td colspan="6"><div class="empty-state">Run a comparison to find the right strategy for your workload.</div></td></tr></tbody></table></div></section>
+        <div class="two-col"><section class="card"><h2 class="card-title">Average waiting time</h2><p class="card-description">Less time in the queue. Lower is better.</p><div class="chart-wrap"><canvas id="chart-wait" role="img" aria-label="Average waiting time by algorithm"></canvas></div></section><section class="card"><h2 class="card-title">Average turnaround time</h2><p class="card-description">From arrival to completion. Lower is better.</p><div class="chart-wrap"><canvas id="chart-turnaround" role="img" aria-label="Average turnaround time by algorithm"></canvas></div></section></div>
+      </div>
+
+      <div class="panel" id="panel-multicore" role="tabpanel" aria-labelledby="tab-multicore">
+        <section class="card section-spaced"><div class="card-heading"><div><h2 class="card-title">More cores. More possibilities.</h2><p class="card-description">Distribute your workload and see parallel scheduling in action.</p></div></div><div class="multicore-controls"><div><label for="mc-cores">CPU cores</label><input type="number" id="mc-cores" min="1" max="4" value="2"></div><div><label for="mc-algo">Algorithm</label><select id="mc-algo"><option value="RR">Round Robin</option><option value="FCFS">First Come First Served</option><option value="SJF">Shortest Job First</option><option value="Priority">Priority</option></select></div><button class="btn btn-primary" onclick="runMulticore()">▶ Run multi-core</button></div></section>
+        <div class="core-grid" id="core-grid"></div><section class="card section-spaced"><h2 class="card-title">All cores · execution timeline</h2><div id="mc-gantt"><div class="empty-state">Run a multi-core simulation to see work happen in parallel.</div></div></section>
+      </div>
+
+      <div class="panel" id="panel-ai" role="tabpanel" aria-labelledby="tab-ai">
+        <section class="ai-panel"><div class="ai-header"><div class="ai-icon" aria-hidden="true">✧</div><div><h2 class="ai-title">A fresh perspective on your workload.</h2><p class="ai-sub">Rule-based insights. No external AI requests.</p></div><span class="tag">ADVISOR LAB</span></div><div id="ai-content"><p class="ai-recommendation">Find a scheduling strategy that fits. Analyse your processes for a recommendation based on arrival times, burst lengths, and priorities.</p></div><button class="btn btn-primary" onclick="runAIAnalysis()">✧ Analyse workload</button></section>
+        <div class="two-col"><section class="card"><h2 class="card-title">Workload profile</h2><div id="task-profile" class="chart-wrap-sm"><canvas id="chart-profile" role="img" aria-label="Workload characteristics"></canvas></div></section><section class="card"><h2 class="card-title">Algorithm score matrix</h2><div id="score-matrix"><div class="empty-state">Your algorithm scores will appear after analysis.</div></div></section></div>
+      </div>
+      <footer class="workspace-footer"><span>Built for curiosity. Designed for clarity.</span><span>CPU SCHEDULER <span class="footer-star" aria-hidden="true">✳</span> PRO</span></footer>
+    </main>
   </div>
-
-  <!-- ════════════════════════════════════════════
-       PANEL 2 — SIMULATION
-       ════════════════════════════════════════════ -->
-  <div class="panel" id="panel-simulation">
-
-    <!-- Playback controls + live stats -->
-    <div class="sim-controls">
-      <button class="btn btn-green"  id="btn-start"  onclick="simStart()">▶ Start</button>
-      <button class="btn btn-amber"  id="btn-pause"  onclick="simPause()"   disabled>⏸ Pause</button>
-      <button class="btn btn-ghost"  id="btn-resume" onclick="simResume()"  disabled>▷ Resume</button>
-      <button class="btn btn-danger" id="btn-reset"  onclick="simReset()">↺ Reset</button>
-
-      <div style="display:flex;align-items:center;gap:8px;margin-left:8px">
-        <label style="margin:0;font-size:12px;color:var(--muted)">Speed:</label>
-        <input type="range" id="sim-speed" min="1" max="10" value="5" style="width:80px">
-        <span id="speed-label" style="font-size:12px;font-family:var(--mono);color:var(--muted)">5x</span>
-      </div>
-
-      <div class="sim-info">
-        <div class="sim-stat">
-          <div class="sim-stat-val" id="sim-time">0</div>
-          <div class="sim-stat-lbl">Time Unit</div>
-        </div>
-        <div class="sim-stat">
-          <div class="sim-stat-val" id="sim-completed">0</div>
-          <div class="sim-stat-lbl">Completed</div>
-        </div>
-        <div class="sim-stat">
-          <div class="sim-stat-val" id="sim-util" style="color:var(--green)">0%</div>
-          <div class="sim-stat-lbl">CPU Util.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Overall progress bar -->
-    <div class="progress-bar" style="margin-bottom:12px">
-      <div class="progress-fill" id="sim-progress" style="width:0%"></div>
-    </div>
-
-    <!-- Process queue chip display -->
-    <div class="card" style="margin-bottom:12px">
-      <div class="card-title">Process Queue State</div>
-      <div id="queue-display" class="queue-display"></div>
-    </div>
-
-    <!-- Gantt chart -->
-    <div class="card" style="margin-bottom:12px">
-      <div class="card-title">
-        Gantt Chart <span class="tag" id="gantt-algo-label">—</span>
-      </div>
-      <div class="gantt-container" id="gantt-container">
-        <div class="gantt-inner">
-          <div class="empty-state">Run simulation to see Gantt chart</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Performance metric cards -->
-    <div class="metrics-grid" id="metrics-grid"></div>
-  </div>
-
-  <!-- ════════════════════════════════════════════
-       PANEL 3 — COMPARISON
-       ════════════════════════════════════════════ -->
-  <div class="panel" id="panel-comparison">
-    <div class="card" style="margin-bottom:14px">
-      <div class="card-title">Multi-Algorithm Comparison</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-        <button class="btn btn-primary" onclick="runComparison()">↻ Run All Algorithms</button>
-        <span style="font-size:12px;color:var(--muted);align-self:center">
-          Runs all algorithms on current task set
-        </span>
-      </div>
-      <div style="overflow-x:auto">
-        <table class="compare-table" id="compare-table">
-          <thead>
-            <tr>
-              <th>Algorithm</th>
-              <th>Avg Wait</th>
-              <th>Avg Turnaround</th>
-              <th>Throughput</th>
-              <th>CPU Util</th>
-              <th>Context Switches</th>
-            </tr>
-          </thead>
-          <tbody id="compare-tbody">
-            <tr>
-              <td colspan="6" style="text-align:center;padding:20px;color:var(--dim)">
-                Run comparison to see results
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title">Waiting Time</div>
-        <div class="chart-wrap"><canvas id="chart-wait"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Turnaround Time</div>
-        <div class="chart-wrap"><canvas id="chart-turnaround"></canvas></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════════════
-       PANEL 4 — MULTI-CORE
-       ════════════════════════════════════════════ -->
-  <div class="panel" id="panel-multicore">
-    <div class="card" style="margin-bottom:14px">
-      <div class="card-title">Multi-Core CPU Simulation</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-        <button class="btn btn-primary" onclick="runMulticore()">▶ Run Multi-Core</button>
-        <div style="display:flex;align-items:center;gap:8px">
-          <label style="margin:0;font-size:12px;color:var(--muted)">Cores:</label>
-          <input type="number" id="mc-cores" min="1" max="4" value="2" style="width:60px">
-        </div>
-        <select id="mc-algo" style="width:auto">
-          <option value="RR">Round Robin</option>
-          <option value="FCFS">FCFS</option>
-          <option value="SJF">SJF</option>
-          <option value="Priority">Priority</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Per-core cards rendered by multicore.js -->
-    <div class="core-grid" id="core-grid"></div>
-
-    <!-- Combined Gantt across all cores -->
-    <div class="card" style="margin-top:14px">
-      <div class="card-title">All Cores — Gantt View</div>
-      <div id="mc-gantt"></div>
-    </div>
-  </div>
-
-  <!-- ════════════════════════════════════════════
-       PANEL 5 — AI ADVISOR
-       ════════════════════════════════════════════ -->
-  <div class="panel" id="panel-ai">
-    <div class="ai-panel fade-in">
-      <div class="ai-header">
-        <div class="ai-icon">✦</div>
-        <div>
-          <div class="ai-title">AI Scheduling Advisor</div>
-          <div class="ai-sub">Rule-based analysis engine · Analyses task characteristics</div>
-        </div>
-      </div>
-      <!-- Recommendation text injected by ai-advisor.js -->
-      <div id="ai-content">
-        <div style="color:var(--muted);font-size:13px">
-          Add tasks and click "Analyse" to get recommendations.
-        </div>
-      </div>
-      <button class="btn btn-primary" style="margin-top:12px" onclick="runAIAnalysis()">
-        ✦ Analyse Tasks
-      </button>
-    </div>
-
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title">Task Profile</div>
-        <div id="task-profile" class="chart-wrap-sm">
-          <canvas id="chart-profile"></canvas>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Algorithm Score Matrix</div>
-        <!-- Score bars injected by ai-advisor.js -->
-        <div id="score-matrix" style="margin-top:8px"></div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /.app -->
-
-<!-- Floating tooltip (used by Gantt hover handlers) -->
+</div>
 <div class="tooltip" id="tooltip"></div>
-
-<!-- ── Third-party library ── -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-
-<!-- ── Application modules (order matters) ── -->
-<script src="constants.js"></script>   <!-- COLORS, ALGORITHMS, global state vars -->
-<script src="algorithms.js"></script>  <!-- All 6 scheduling algorithms + metrics -->
-<script src="tasks.js"></script>       <!-- Add / remove / preset / render tasks -->
-<script src="simulation.js"></script>  <!-- Animation loop, Gantt, queue display   -->
-<script src="comparison.js"></script>  <!-- Multi-algorithm comparison + charts    -->
-<script src="multicore.js"></script>   <!-- Multi-core distribution + Gantt        -->
-<script src="ai-advisor.js"></script>  <!-- Rule-based recommendation engine       -->
-<script src="ui.js"></script>          <!-- Tab switching, algo grid, init()       -->
-
+<script src="constants.js"></script>
+<script src="algorithms.js"></script>
+<script src="tasks.js"></script>
+<script src="simulation.js"></script>
+<script src="comparision.js"></script>
+<script src="multicore.js"></script>
+<script src="ai-advisor.js"></script>
+<script src="ui.js"></script>
 </body>
 </html>

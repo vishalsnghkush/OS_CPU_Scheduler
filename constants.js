@@ -4,9 +4,9 @@
 
 /** Task colour palette — cycles when more tasks are added */
 const COLORS = [
-  '#6c63ff', '#00d4ff', '#ff6b9d', '#22d3a0',
-  '#fbbf24', '#a78bfa', '#f87171', '#34d399',
-  '#fb923c', '#38bdf8', '#e879f9', '#4ade80'
+  '#b9a3e6', '#80c4d6', '#e3a3b7', '#a8d998',
+  '#e8c080', '#9caee5', '#e79c8f', '#81c7b0',
+  '#d9ac7d', '#8dbbdc', '#cf9fd8', '#b6ca83'
 ];
 
 /** All supported scheduling algorithms */
